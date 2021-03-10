@@ -1,77 +1,18 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 
-// Import Ionic 5 styles and components
-import '@ionic/core/css/core.css';
-import '@ionic/core/css/ionic.bundle.css';
-import {
-  IonApp,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonButton
-} from '@ionic/react';
-
-import React, { Component } from 'react';
-
-import './App.css';
-
-import axios from 'axios';
-
-class App extends Component {
-  API_KEY = 'cd624a0d6ecd4775a788275902f9b89d';
-  API_URL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${this.API_KEY}`
-
-  state = {
-    items: []
-  }
-
-  componentDidMount() {
-    axios.get(this.API_URL).then(response => response.data)
-    .then((data) => {
-      this.setState({ items: data.articles })
-      console.log(this.state.items)
-     })
-  }
-  render() {
-    return (
-      <IonApp>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Dustin's News Feed</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-      {this.state.items.map((item) => (
-                <IonCard>
-                  <img src={item.urlToImage}/>
-                <IonCardHeader>
-                  <IonCardTitle>
-                    {item.title}
-                  </IonCardTitle>
-
-                  <IonCardSubtitle>
-                    {item.author}
-                  </IonCardSubtitle>
-                </IonCardHeader>
-
-                <IonCardContent>
-                  <p>{item.content}</p>
-                  <IonButton href={item.url}> Read</IonButton>
-                </IonCardContent>
-                </IonCard>
-      ))}
-      </IonContent>
-    </IonApp>
-
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header>
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>We now have Auth!</h1>
+      </header>
+      <AmplifySignOut />
+    </div>
+  );
 }
 
-export default App;
+export default withAuthenticator(App);
